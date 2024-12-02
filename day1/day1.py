@@ -1,27 +1,27 @@
-with open('day1.txt', 'r') as file:
+with open('day2.txt', 'r') as file:
     lines = file.readlines()    
     
-leftCol = []
-rightCol = []
-    
+
+safeLines = 0    
+
 for line in lines:
     numbers = line.split()
-    firstNum = int(numbers[0])
-    secondNum = int(numbers[1])
+    safe = True
     
-    leftCol.append(firstNum)
-    rightCol.append(secondNum)
+    if len(numbers) < 1:
+        continue
+    
+    if numbers[0] > numbers[1]:
+        for i in range(len(numbers)-1):
+            if numbers[i] < numbers[i+1]:
+                safe = False
+    
+    if numbers[0] < numbers[1]:
+        for i in range(len(numbers-1)):
+            if numbers[i] > numbers[i+1]:
+                safe = False
+                
+    if (safe):
+        safeLines += 1
 
-leftCol = sorted(leftCol)
-rightCol = sorted(rightCol)
-
-sum = 0
-    
-for i in range(len(leftCol)):
-    firstNum = leftCol[i]
-    secondNum = rightCol[i]
-    
-    diff = abs(firstNum - secondNum)
-    sum += diff
-            
-print(sum)
+print(safeLines)
